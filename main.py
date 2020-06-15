@@ -1,10 +1,18 @@
 import sys
 import os
-#pip install Pillow
+import tkinter as tk
+from tkinter import filedialog
+from tkinter import Label
+from tkinter import Button
 from PIL import Image
 from multiprocessing import Process, Queue, cpu_count
 
-TILE_SIZE      = 10		# height/width of mosaic tiles in pixels
+"""
+To generate a sequence of tiles(screenshots) from a movie
+	ffmpeg -i source.jpg -vf fps = 1/30 output%03d.jpg
+"""
+
+TILE_SIZE      = 50		# height/width of mosaic tiles in pixels (Smaller the value finer will be the result)
 TILE_MATCH_RES = 5		# tile matching resolution (higher values give better fit but require more processing)
 ENLARGEMENT    = 8		# the mosaic image will be this many times wider and taller than the original
 
@@ -69,7 +77,7 @@ class TargetImage:
 		w_diff = (w % TILE_SIZE)/2
 		h_diff = (h % TILE_SIZE)/2
 		
-		# if necessary, crop the image slightly so we use a whole number of tiles horizontally and vertically
+		# If necessary, crop the image slightly so we use a whole number of tiles horizontally and vertically
 		if w_diff or h_diff:
 			large_img = large_img.crop((w_diff, h_diff, w - w_diff, h - h_diff))
 
@@ -187,10 +195,10 @@ def compose(original_img, tiles):
 	result_queue = Queue()
 
 	try:
-		# start the worker processes that will build the mosaic image
+		# Start the worker processes that will build the mosaic image
 		Process(target=build_mosaic, args=(result_queue, all_tile_data_large, original_img_large)).start()
 
-		# start the worker processes that will perform the tile fitting
+		# Start the worker processes that will perform the tile fitting
 		for n in range(WORKER_COUNT):
 			Process(target=fit_tiles, args=(work_queue, result_queue, all_tile_data_small)).start()
 
@@ -206,7 +214,7 @@ def compose(original_img, tiles):
 		print('\nHalting, saving partial image please wait...')
 
 	finally:
-		# put these special values onto the queue to let the workers know they can terminate
+		# Put these special values onto the queue to let the workers know they can terminate
 		for n in range(WORKER_COUNT):
 			work_queue.put((EOQ_VALUE, EOQ_VALUE))
 
@@ -216,7 +224,12 @@ def mosaic(img_path, tiles_path):
 	compose(image_data, tiles_data)
 
 if __name__ == '__main__':
-	if len(sys.argv) < 3:
-		print('Usage: {} <image> <tiles directory>\r'.format(sys.argv[0]))
-	else:
-		mosaic(sys.argv[1], sys.argv[2])
+
+	window = tk.Tk()
+	window.title("PHOTO-MOSAIC")
+	window.geometry("1370x720")
+	input = filedialog.askopenfilename(initialdir="/", title = "Select file")
+	output = filedialog.askdirectory(initialdir="/", title = "Select folder")
+	mosaic(input, output)
+	
+	window.mainloop()
