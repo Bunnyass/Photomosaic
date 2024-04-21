@@ -9,3 +9,4 @@ This project has been made to generate a photo-mosaic.  A photomosaic is an imag
 
 ## Screenshots
 ![alt text](https://github.com/jayantknaik/PhotoMosaic/blob/master/mosaic.jpeg?raw=true)
+![alt text](https://github.com/jayantknaik/PhotoMosaic/blob/master/Media/source.jpg?raw=true)
