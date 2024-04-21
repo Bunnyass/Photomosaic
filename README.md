@@ -19,11 +19,10 @@ Install photo-mosaic with pip
     pip install pillow multiprocess
 ```
     
-## Screenshots
+## Sample Output
 
-Generated
 ![alt text](https://github.com/jayantknaik/PhotoMosaic/blob/master/mosaic.jpeg?raw=true)
-##
 
-Original
+## Sample Input
+
 ![alt text](https://github.com/jayantknaik/PhotoMosaic/blob/master/Media/source.jpg?raw=true)
