@@ -1,8 +1,8 @@
 
 # PHOTO MOSAIC
 
-A photomosaic is an image split into a grid of rectangles, with each replaced by another image that matches the target (the image you ultimately want to appear in the photomosaic). 
-The matching is done by comparing each pixel in the rectangle to the corresponding pixel from each library image. The rectangle in the target is then replaced with the library image that minimizes the total difference.
+This project implements a photo mosaic generator using Python. It allows users to convert an image into a mosaic composed of smaller tile images. The project aims to create a visually appealing and artistic representation of the original image with high efficiency.
+The motivation behind this project stemmed from exploring image processing techniques and creating a fun and creative application of Python. It addresses the challenge of transforming an image into a unique mosaic artwork.
 
 
 ## Features
